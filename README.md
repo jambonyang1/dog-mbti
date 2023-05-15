@@ -1,4 +1,4 @@
-# data-engineering
+# dog-mbti
 
 ## Project setup
 ```

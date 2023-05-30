@@ -13,7 +13,7 @@
       <b-img :src="previewImageData" fluid thumbnail> </b-img>
       <b-button
         variant="primary"
-        type="button"
+        type="submit"
         class="rounded-pill px-4 m-1"
         v-on:click="analyzeImage"
       >
@@ -21,28 +21,21 @@
       </b-button>
       <b-button
         variant="danger"
-        type="button"
+        type="submit"
         class="rounded-pill px-4 m-1"
         @click="resetInput"
       >
         Reset
       </b-button>
-      <div>
-        <div v-if="breedProp" class="mt-3">
-          <h2>분석 결과</h2>
-          <b-card class="mt-3" header="종 이름">
-            <b-card-text class="m-0">{{ breedName }}</b-card-text>
-          </b-card>
-          <b-card class="mt-3" header="종 특징">
-            <b-card-text class="m-0">{{ breedProp }}</b-card-text>
-          </b-card>
-          <b-card>
-            <b-card-img src="imageURL" alt="image"></b-card-img>
-          </b-card>
-        </div>
-        <!-- <div v-else class="text-center mt-3 d-flex justify-content-center">
-          <b-spinner :variant="primary" :key="primary"></b-spinner>
-        </div> -->
+      <div v-if="result" class="mt-3">
+        <h2>분석 결과</h2>
+        <b-card class="mt-3" header="종 이름">
+          <pre class="m-0">{{ result }}</pre>
+        </b-card>
+        <b-card class="mt-3" header="종 특징">
+          <pre class="m-0">특징</pre>
+        </b-card>
+        <!-- <img :src="resultImage" class="img-fluid rounded" /> -->
       </div>
     </div>
   </b-container>
@@ -59,41 +52,23 @@ export default {
       result: null,
       previewImageData: null,
       responseJson: null,
-      responseImage: null,
-      imageURL: null,
-      breedName: null,
-      breedProp: null,
     };
   },
   methods: {
-    async makeResult() {
-      const response = this.responseJson;
-      this.breedName = response["data"]["breed"].toUpperCase();
-      var gpt_addr =
-        "https://gshnajsid6.execute-api.us-east-1.amazonaws.com/dev/" +
-        this.breedName;
-      var gptResponse = await axios.get(gpt_addr);
-      this.breedProp = gptResponse["data"];
+    makeResult(response) {
+      var breed = response["data"]["breed"];
+      this.result = breed.toUpperCase();
     },
     async analyzeImage() {
-      this.breedName = null;
-      this.breedProp = null;
       const formData = new FormData();
       formData.append("file", this.imageFile);
-      this.responseJson = await axios.post(
-        "http://3.133.59.45:8000/predict",
+      console.log(formData);
+      const response = await axios.post(
+        "http://18.221.211.75:8000/predict",
         formData
       );
-      this.makeResult();
-
-      this.responseImage = await axios.post(
-        "http://3.133.59.45:8000/final",
-        formData,
-        { responseType: "arraybuffer" }
-      );
-      const blob = new Blob([this.responseImage.data], { type: "image/png" });
-      this.imageURL = URL.createObjectURL(blob);
-      console.log(this.imageURL);
+      this.responseJson = response;
+      this.makeResult(response);
     },
     resetInput() {
       this.imageFile = null;

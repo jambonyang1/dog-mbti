@@ -1,496 +1,478 @@
 <template>
-  <div>
-    <div class="test-app">
-      <div class="background"></div>
-      <div class="main-page">
-        <div class="main-page-deco">
-          <div class="main-subtitle-deco">
-            <svg class="svg">
-              <defs>
-                <path
-                  id="text-curve"
-                  class="path"
-                  d="M 155 50 C 230 5 330 5 400 50"
-                ></path>
-              </defs>
-              <text x="0" y="100">
-                <textPath href="#text-curve">
-                  우리 강아지의 높은 점수를 확인하자!
-                </textPath>
-              </text>
-            </svg>
-          </div>
-          <div class="main-subtitle">AI가 본 우리 강아지 외모 순위는?</div>
-          <div class="main-title">DOG-SCORE</div>
-
-          <b-container>
-            <b-row class="justify-content-md-center">
-              <b-col md="auto"
-                ><img class="image_real" src="../assets/sample1.jpg"
-              /></b-col>
-              <b-col md="2"
-                ><img class="image_arrow" src="../assets/arrow.png"
-              /></b-col>
-              <b-col md="auto"
-                ><img class="image_pic_1" src="../assets/sample_icon1.png"
-              /></b-col>
-            </b-row>
-          </b-container>
-          <b-container>
-            <b-row class="justify-content-md-center">
-              <b-col md="auto"
-                ><img class="image_real" src="../assets/sample2.jpg"
-              /></b-col>
-              <b-col md="2"
-                ><img class="image_arrow" src="../assets/arrow.png"
-              /></b-col>
-              <b-col md="auto"
-                ><img class="image_pic_1" src="../assets/sample_icon2.png"
-              /></b-col>
-            </b-row>
-          </b-container>
-          <b-container>
-            <b-row class="justify-content-md-center">
-              <b-col md="auto"
-                ><img class="image_real" src="../assets/sample3.jpg"
-              /></b-col>
-              <b-col md="2"
-                ><img class="image_arrow" src="../assets/arrow.png"
-              /></b-col>
-              <b-col md="auto"
-                ><img class="image_pic_3" src="../assets/sample_icon3.png"
-              /></b-col>
-            </b-row>
-          </b-container>
-          <table>
-            <tbody>
-              <tr class="table_grid">
-                <td class="td_right">
-                  <img
-                    class="image_real"
-                    src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/images/dog_AI/sample1.jpg"
-                  />
-                </td>
-                <td>
-                  <img
-                    class="image_arrow"
-                    src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/icon/arrow.png"
-                  />
-                </td>
-                <td class="td_left">
-                  <img
-                    class="image_pic_1"
-                    src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/images/dog_AI/sample_icon1.png"
-                  />
-                </td>
-              </tr>
-
-              <tr class="table_grid">
-                <td class="td_right">
-                  <img
-                    class="image_real"
-                    src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/images/dog_AI/sample2.jpg"
-                  />
-                </td>
-                <td>
-                  <img
-                    class="image_arrow"
-                    src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/icon/arrow.png"
-                  />
-                </td>
-                <td class="td_left">
-                  <img
-                    class="image_pic_2"
-                    src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/images/dog_AI/sample_icon2.png"
-                  />
-                </td>
-              </tr>
-
-              <tr class="table_grid">
-                <td class="td_right">
-                  <img
-                    class="image_real"
-                    src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/images/dog_AI/sample3.jpg"
-                  />
-                </td>
-                <td>
-                  <img
-                    class="image_arrow"
-                    src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/icon/arrow.png"
-                  />
-                </td>
-                <td class="td_left">
-                  <img
-                    class="image_pic_3"
-                    src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/images/dog_AI/sample_icon3.png"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <label for="avatar" class="button">
-            <div class="button_grid">
-              <img
-                class="image_carmera"
-                src="https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/icon/camera.png"
-              />
-              <div>
-                사진 분석하기
-                <br />
-                <div class="button_text">Dog Face AI</div>
-              </div>
-            </div>
-          </label>
-          <form
-            action="/dog_AI/analysis/"
-            enctype="multipart/form-data"
-            method="POST"
-          >
-            <input
-              type="hidden"
-              name="csrfmiddlewaretoken"
-              value="ui49ewvFKqTpQKixDhjxTrYQcMiQrL5E1jHTHdRlBVtU8Dh72XieS0zswXikh7gN"
-            />
-            <input
-              type="file"
-              name="images"
-              id="avatar"
-              accept="image/*"
-              class="input"
-              onchange="analysis()"
-            />
-            <button type="submit" style="display: none" id="final_button">
-              분석하기
-            </button>
-          </form>
+  <div class="main-container">
+    <div class="main-main">
+      <div class="box">
+        <img src="../assets/maltese.jpg" alt="real-1" class="real-1" />
+        <img src="../assets/sample_icon1.png" alt="icon1" class="icon-1" />
+        <div class="text-group">
+          <div class="main-text"><span>DogMoji</span></div>
+          <div class="main-text2"><span>Make your dog an emoji!</span></div>
+          <b-button variant="warning" class="button" size="lg"
+            >Let's start!
+          </b-button>
         </div>
+        <img src="../assets/sample2.jpg" alt="real-2" class="real-2" />
+        <div class="icon-2"></div>
+        <img src="../assets/sample3.jpg" alt="real-3" class="real-3" />
+        <div class="icon-3"></div>
       </div>
-      <div class="background"></div>
     </div>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
-// import ImageInteract from "./components/ImageInteract.vue";
-// import NavigationBar from "./components/NavigationBar.vue";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
 export default {
-  name: "Home",
-  // components: {
-  //   "image-interact": ImageInteract,
-  //   "navigaion-bar": NavigationBar,
-  // },
-  // data() {
-  //   return {
-  //     sample_images: [
-  //       {
-  //         real: "../assets/sample1.jpg",
-  //         icon: "../assets/sample_icon1.png",
-  //       },
-  //       {
-  //         real: "../assets/sample2.jpg",
-  //         icon: "../assets/sample_icon2.png",
-  //       },
-  //       {
-  //         real: "../assets/sample3.jpg",
-  //         icon: "../assets/sample_icon3.png",
-  //       },
-  //     ]
-  //   },
-  // },
-  methods: {
-    analysis() {
-      document.getElementById("final_button").click();
-    },
-  },
+  name: "Main",
+  props: {},
 };
 </script>
 
-<style>
-td {
-  text-align: center;
-}
-
-.td_right {
-  text-align: right;
-}
-
-.td_left {
-  text-align: left;
-}
-
-.table_grid {
-  display: grid;
-  grid-template-columns: 250px 100px 200px;
-}
-
-.image_real {
-  width: 160px;
-  margin-top: 20px;
-  text-align: right;
-  border-radius: 10px;
-}
-
-.image_pic_1 {
-  width: 150px;
-  margin-left: -25px;
-}
-
-.image_pic_2 {
-  padding-top: 20px;
-  width: 100px;
-}
-
-.image_pic_3 {
-  padding-top: 20px;
-  width: 115px;
-  margin-left: -5px;
-}
-
-.image_arrow {
-  padding-top: 100px;
-  width: 20px;
-}
-
-.main-subtitle {
-  font-family: "KOTRA_BOLD-Bold";
-  color: white;
-  text-align: center;
-  background-color: var(--maincolor);
-  margin-left: 80px;
-  margin-right: 80px;
-  font-size: 22px;
+<style scoped>
+.box {
+  height: 100vh;
+  width: 95%;
+  max-width: 500px;
   padding: 10px;
-  padding-bottom: 5px;
-  margin-bottom: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  transform: translate(-50%, -50%);
+  border-radius: 5vh;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  align-items: center;
 }
+.main-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.main-main {
+  gap: 10px;
+  width: 100%;
+  height: 982px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  background-image: url("../assets/background.png");
+  background-size: cover;
+}
+.real-1 {
+  position: absolute;
+  width: 169px;
+  height: 169px;
+  left: calc(50% - 169px / 2 + 151.5px);
+  top: calc(50% - 169px / 2 - 317.5px);
 
-.main-title {
-  font-family: "RixInooAriDuriR";
-  color: var(--maincolor);
-  font-size: 70px;
+  object-fit: cover;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
+  border-radius: 89px;
+}
+.icon-1 {
+  position: absolute;
+  width: 114px;
+  height: 114px;
+  left: 254px;
+  top: 173px;
+
+  background: #fdffa2;
+  object-fit: cover;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 57px;
+}
+.text-group {
+  top: 242px;
+  left: 289px;
+  width: 934px;
+  height: 311px;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+}
+.main-text {
+  color: rgba(251, 234, 88, 1);
+  width: 934px;
+  height: auto;
+  position: absolute;
+  font-size: 96px;
+  font-style: Bold;
   text-align: center;
+  font-family: Roboto;
+  font-weight: 700;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+  text-shadow: 1px 2px 2px #888;
+}
+.main-text2 {
+  top: 130px;
+  left: 221px;
+  color: rgba(0, 0, 0, 1);
+  width: 491px;
+  height: auto;
+  position: absolute;
+  font-size: 36px;
+  font-style: Bold;
+  text-align: center;
+  font-family: Roboto;
+  font-weight: 700;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+  text-shadow: 1px 2px 2px #bbb;
 }
 
 .button {
-  display: block;
-  font-family: "KOTRA_BOLD-Bold";
-  font-size: 15px;
-  color: white;
-  background-color: rgb(19, 18, 18);
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  width: 320px;
-  padding-top: 13px;
-  margin-left: 110px;
-  margin-right: 110px;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  position: absolute;
+  top: 190px;
+  filter: drop-shadow(1px 2px 2px #bbb);
 }
-
-.image_carmera {
-  width: 80px;
-  margin-top: -10px;
-  margin-left: 10px;
-  margin-bottom: -10px;
-}
-
-.button_grid {
-  display: grid;
-  grid-template-columns: 100px 1fr;
+.main-text4 {
+  color: rgba(0, 0, 0, 1);
+  height: auto;
+  font-size: 14px;
+  font-style: Medium;
   text-align: left;
+  font-family: Lexend;
+  font-weight: 500;
+  line-height: 12px;
+  font-stretch: normal;
+  text-decoration: none;
 }
+.real-2 {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  left: 263px;
+  top: 724px;
 
-.button_text {
-  font-family: "InfinitySans-RegularA1";
-  font-size: 30px;
-  font-weight: bold;
-  margin-top: -5px;
+  object-fit: cover;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 85px;
 }
-
-.input {
-  display: none;
-}
-
-::-webkit-scrollbar {
-  display: none;
-}
-
-:root {
-  --maincolor: rgb(92, 93, 184);
-}
-
-body {
-  font-family: "Cafe24Ssurround";
-  margin: 0px;
-  background-color: var(--maincolor);
-}
-
-.text {
-  font-size: 200px;
-}
-
-.test-app {
-  display: grid;
-  grid-template-columns: 1fr 600px 1fr;
-  background-color: var(--maincolor);
-}
-
-/*main*/
-.main-page {
-  margin-top: 30px;
-  margin-bottom: 60px;
-  background-color: rgb(255, 255, 255);
-  padding: 10px;
-  border-radius: 300px 300px 10px 10px;
-}
-
-.main-page-deco {
-  background-color: rgb(255, 255, 255);
-  padding: 10px;
-  border: 3px solid var(--maincolor);
-  border-radius: 290px 290px 4px 4px;
-  height: calc(100% - 24px);
-  text-align: center;
-}
-
-.main-subtitle-deco {
+.icon-2 {
+  position: absolute;
+  width: 100px;
   height: 100px;
-}
+  left: 370px;
+  top: 679px;
 
-/*svg*/
-.svg {
-  width: 100%;
-  height: 100%;
+  background: url(../assets/sample_icon2.png), #fdffa2;
+  background-size: 70px;
+  background-repeat: no-repeat;
+  background-position: top;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 49px;
 }
+.real-3 {
+  position: absolute;
+  width: 141px;
+  height: 141px;
+  left: 29px;
+  top: 578px;
 
-text {
-  fill: var(--maincolor);
-  font-size: 17px;
-  font-weight: bold;
+  object-fit: cover;
+  object-position: top;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 61px;
 }
+.icon-3 {
+  position: absolute;
+  width: 93px;
+  height: 93px;
+  left: 125px;
+  top: 660px;
 
-.path {
-  fill: transparent;
-  stroke: crimson;
-}
-
-textPath {
-  text-align: center;
-}
-.pop_up_background {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  background-color: #606060;
-  border: none;
-  opacity: 0.7;
-  z-index: 2;
-}
-
-.pop_up_body {
-  position: fixed;
-  top: calc(50vh - 300px);
-  left: calc(50vw - 300px);
-  width: 600px;
-  height: 600px;
-  background-color: #ffffff;
-  background-image: url("https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/event/goods_event.png");
-  background-size: 600px;
-  border-radius: 10px;
-  text-align: right;
-  z-index: 2;
-}
-
-.pop_up_body2 {
-  position: fixed;
-  top: calc(50vh - 300px);
-  left: calc(50vw - 300px);
-  width: 600px;
-  height: 600px;
-  background-color: var(--maincolor);
-  background-size: 600px;
-  border-radius: 10px;
-  text-align: right;
-  z-index: 2;
-}
-
-.pop_up_body3 {
-  width: 100%;
-  text-align: center;
-}
-
-.pop_up_border {
-  margin: 14px;
-  margin-top: -11px;
-  width: calc(540px - 38px);
-  height: calc(540px - 38px);
-  border: 5px solid var(--maincolor);
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 30px;
-}
-
-.pop_up_score_body {
-  position: fixed;
-  top: calc(50vh - 300px);
-  left: calc(50vw - 300px);
-  width: 600px;
-  height: 600px;
-  background-color: #ffffff;
-  background-image: url("https://dogmbti.s3.ap-northeast-2.amazonaws.com/static/event/goods_event.png");
-  background-size: 600px;
-  border-radius: 10px;
-  text-align: right;
-  z-index: 2;
-}
-
-.pop_up_body_X {
-  background-color: transparent;
-  padding: 5px;
-}
-
-.pop_up_score_body_X {
-  background-color: transparent;
-  padding: 5px;
-}
-
-.image_x_button {
-  width: 15px;
-}
-
-.pop_up_body_kakao_button {
-  margin-top: 500px;
-  margin-right: 15px;
-  width: 225px;
-  height: 55px;
-  border-radius: 30px;
-  font-family: "InfinitySans-RegularA1";
-  font-size: 17px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
-
-.pop_up_body_kakao_button:hover {
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-}
-
-.questions {
-  padding: 5px;
-}
-
-.image_event {
-  width: 250px;
-  border-radius: 50%;
-  margin: 20px;
+  background: url(../assets/sample_icon3.png), #fdffa2;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 80px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 46.5px;
 }
 </style>
+
+<!-- <template>
+  <div class="main-container">
+    <div class="main-main">
+      <div class="main-frame1"></div>
+      <img src="../assets/maltese.jpg" alt="maltese" class="real-1" />
+      <img
+        src="../assets/sample_icon1.png"
+        alt="sample_icon1.png"
+        class="icon-1"
+      />
+      <div class="main-group3">
+        <span class="name">DogMoji</span>
+        <span class="content">Make your dog an emoji!</span>
+        <button class="start-button">
+          <span class="button-content"><span>Let’s start!</span></span>
+        </button>
+      </div>
+      <img src="../assets/sample2.jpg" alt="sample2" class="real-2" />
+      <div class="icon-2"></div>
+      <img src="../assets/black_dog.jpg" alt="sample3" class="real-3" />
+      <div class="icon-3"></div>
+      <img src="../assets/paw-yellow.png" alt="paw" class="paw" />
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Main",
+  props: {},
+};
+</script>
+
+<style scoped>
+.main-container {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.main-main {
+  gap: 10px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  background-image: url("../assets/background.png");
+  background-size: cover;
+}
+.main-frame1 {
+  top: 116px;
+  left: 578px;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+.real-1 {
+  position: absolute;
+  width: 395px;
+  height: 395px;
+  left: calc(50% - 395px / 2 + 539.5px);
+  top: calc(50% - 395px / 2 - 91.5px);
+
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
+  border-radius: 73px;
+  object-fit: cover;
+}
+.real-2 {
+  position: absolute;
+  width: 330px;
+  height: 330px;
+  left: 676px;
+  top: 83px;
+
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 95px;
+  object-fit: cover;
+}
+
+.real-3 {
+  position: absolute;
+  width: 265px;
+  height: 265px;
+  left: 363px;
+  top: 630px;
+
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 61px;
+  object-fit: cover;
+}
+.icon-1 {
+  position: absolute;
+  width: 288px;
+  height: 287px;
+  left: 1008px;
+  top: 551px;
+
+  background: #fdffa2;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
+  object-fit: cover;
+}
+.icon-2 {
+  position: absolute;
+  width: 191px;
+  height: 194px;
+  left: 532px;
+  top: 77px;
+
+  background: url(../assets/sample_icon2.png), #fdffa2;
+  background-size: 155px;
+  background-repeat: no-repeat;
+  background-position: top;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 70px;
+}
+
+.icon-3 {
+  position: absolute;
+  width: 203px;
+  height: 211px;
+  left: 588px;
+  top: 732px;
+
+  background: url(../assets/sample_icon3.png), #fdffa2;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 170px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 62px;
+}
+.main-group3 {
+  top: 329px;
+  left: 0px;
+  width: 934px;
+  height: 289px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.name {
+  top: 93px;
+  color: rgb(38, 38, 38);
+  right: -277px;
+  width: 934px;
+  height: auto;
+  position: absolute;
+  font-size: 96px;
+  font-style: Bold;
+  text-align: left;
+  font-family: Roboto;
+  font-weight: 700;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.content {
+  top: 202px;
+  left: 283px;
+  color: rgb(89, 89, 89);
+  width: 491px;
+  height: auto;
+  position: absolute;
+  font-size: 36px;
+  font-style: Bold;
+  text-align: left;
+  font-family: Roboto;
+  font-weight: 700;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.start-button {
+  gap: 10px;
+  top: 162px;
+  right: 19px;
+  display: flex;
+  padding: 20px 48px;
+  position: absolute;
+  align-items: flex-start;
+  border-radius: 4px;
+  background-color: rgba(251, 234, 88, 1);
+  border-style: none;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.button-content {
+  color: rgba(0, 0, 0, 1);
+  height: auto;
+  font-size: 20px;
+  font-style: Medium;
+  text-align: left;
+  font-family: Lexend;
+  font-weight: 500;
+  line-height: 12px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.main-polygon2 {
+  top: 73.09272003173828px;
+  left: 1023.7996826171875px;
+  width: 52px;
+  height: 54px;
+  rotate: 45deg;
+  position: absolute;
+}
+.main-polygon8 {
+  top: 793.9488525390625px;
+  left: 119.70709991455078px;
+  width: 52px;
+  height: 54px;
+  position: absolute;
+}
+.main-polygon7 {
+  top: 666.6641235351562px;
+  left: 856.7377319335938px;
+  width: 52px;
+  height: 54px;
+  rotate: 160deg;
+  position: absolute;
+}
+.main-polygon5 {
+  top: 716.2874145507812px;
+  left: 1365.2640380859375px;
+  width: 52px;
+  height: 54px;
+  position: absolute;
+}
+.main-polygon6 {
+  top: 950.5469360351562px;
+  left: 955.1228637695312px;
+  width: 52px;
+  height: 54px;
+  position: absolute;
+}
+.main-polygon3 {
+  top: 185.76168823242188px;
+  left: 117px;
+  width: 52px;
+  height: 54px;
+  rotate: 270deg;
+  position: absolute;
+}
+.main-polygon4 {
+  top: 304.4760437011719px;
+  left: 362.8023986816406px;
+  width: 52px;
+  height: 54px;
+  rotate: 80deg;
+  position: absolute;
+}
+.main-polygon9 {
+  top: 153.18133544921875px;
+  left: 1348px;
+  width: 52px;
+  height: 54px;
+  position: absolute;
+}
+.paw {
+  top: 411px;
+  left: 101px;
+  width: 161px;
+  height: 161px;
+  position: absolute;
+  filter: drop-shadow(1px 5px 5px #aaa);
+}
+</style> -->

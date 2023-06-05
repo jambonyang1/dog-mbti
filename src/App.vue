@@ -1,14 +1,13 @@
 <template>
   <div>
-    <nav-bar></nav-bar>
-    <image-interact></image-interact>
+    <analyze />
   </div>
 </template>
 
 <script>
 import Vue from "vue";
-import ImageInteract from "./components/ImageInteract.vue";
-import NavigationBar from "./components/NavigationBar.vue";
+// import Home from "./components/Home.vue";
+import Analyze from "./components/Analyze.vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -18,8 +17,8 @@ Vue.use(IconsPlugin);
 export default {
   name: "App",
   components: {
-    "image-interact": ImageInteract,
-    "nav-bar": NavigationBar,
+    // "main-page": Home,
+    analyze: Analyze,
   },
 };
 </script>

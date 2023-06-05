@@ -244,29 +244,100 @@ export default {
 }
 .real-1 {
   position: absolute;
-  width: 169px;
-  height: 169px;
-  left: 310px;
-  top: 80px;
+  max-width: 169px;
+  width: 35vw;
+  max-height: 169px;
+  height: 35vw;
+  left: calc(50% + 13vh);
+  top: calc(15vh);
 
   object-fit: cover;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
   border-radius: 89px;
+  transform: translate(-50%, -50%);
 }
 .icon-1 {
   position: absolute;
-  width: 114px;
-  height: 114px;
-  left: 254px;
-  top: 173px;
+  width: 25vw;
+  max-width: 114px;
+  height: 25vw;
+  max-height: 114px;
+  left: calc(50% + 3vh);
+  top: calc(20vh);
 
   background: #fdffa2;
   object-fit: cover;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 57px;
+  transform: translate(-50%, -50%);
+}
+
+.real-2 {
+  position: absolute;
+  max-width: 170px;
+  width: 32vw;
+  max-height: 170px;
+  height: 32vw;
+  left: calc(50% + 10vh);
+  top: calc(86vh);
+
+  object-fit: cover;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 85px;
+  transform: translate(-50%, -50%);
+}
+.icon-2 {
+  position: absolute;
+  max-width: 100px;
+  width: 19vw;
+  max-height: 100px;
+  height: 19vw;
+  left: calc(50% + 18vh);
+  top: calc(79vh);
+
+  background: url(../assets/sample_icon2.png), #fdffa2;
+  background-size: 70px;
+  background-repeat: no-repeat;
+  background-position: top;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 49px;
+  object-fit: fill;
+  transform: translate(-50%, -50%);
+}
+.real-3 {
+  position: absolute;
+  max-width: 141px;
+  width: 23vw;
+  max-height: 141px;
+  height: 23vw;
+  left: calc(50% - 17vh);
+  top: calc(70vh);
+
+  object-fit: cover;
+  object-position: top;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 61px;
+  transform: translate(-50%, -50%);
+}
+.icon-3 {
+  position: absolute;
+  max-width: 93px;
+  width: 15vw;
+  max-height: 93px;
+  height: 15vw;
+  left: calc(50% - 8vh);
+  top: calc(78vh);
+
+  background: url(../assets/sample_icon3.png), #fdffa2;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 80px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 46.5px;
+  transform: translate(-50%, -50%);
 }
 .text-group {
-  top: 500px;
+  top: 50vh;
   left: 50%;
   width: 934px;
   height: 311px;
@@ -326,57 +397,6 @@ export default {
   line-height: 12px;
   font-stretch: normal;
   text-decoration: none;
-}
-.real-2 {
-  position: absolute;
-  width: 170px;
-  height: 170px;
-  left: 263px;
-  top: 724px;
-
-  object-fit: cover;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 85px;
-}
-.icon-2 {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  left: 370px;
-  top: 679px;
-
-  background: url(../assets/sample_icon2.png), #fdffa2;
-  background-size: 70px;
-  background-repeat: no-repeat;
-  background-position: top;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 49px;
-}
-.real-3 {
-  position: absolute;
-  width: 141px;
-  height: 141px;
-  left: 29px;
-  top: 578px;
-
-  object-fit: cover;
-  object-position: top;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 61px;
-}
-.icon-3 {
-  position: absolute;
-  width: 93px;
-  height: 93px;
-  left: 125px;
-  top: 660px;
-
-  background: url(../assets/sample_icon3.png), #fdffa2;
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: 80px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 46.5px;
 }
 
 .result {

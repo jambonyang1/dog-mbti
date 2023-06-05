@@ -171,7 +171,7 @@ export default {
 .box {
   height: 100vh;
   width: 95%;
-  max-width: 500px;
+  max-width: 450px;
   padding: 10px;
   position: absolute;
   top: 50%;
@@ -181,7 +181,8 @@ export default {
   border-radius: 5vh;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   align-items: center;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .container {

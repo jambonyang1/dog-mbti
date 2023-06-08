@@ -22,25 +22,24 @@
           <div class="icon-3"></div>
         </div>
         <div class="container" ref="fileUpload" tabindex="0">
-          <div>
+          <div v-if="!imageFile">
             <h3>Upload Image</h3>
             <div class="drop_box">
-              <div v-if="!imageFile">
-                <header>
-                  <h4>Select file here</h4>
-                </header>
-                <p>Files Supported: jpg, jpeg, png</p>
-                <b-form-file
-                  v-model="imageFile"
-                  placeholder="Choose a file or drop it here..."
-                  drop-placeholder="Drop file here..."
-                  :state="Boolean(imageFile)"
-                  accept=".jpg, .png"
-                  class="rounded-pill bg-light text-dark border-0 py-3 px-4 my-3"
-                  @change="previewImage"
-                >
-                </b-form-file>
-                <!-- <input
+              <header>
+                <h4>Select file here</h4>
+              </header>
+              <p>Files Supported: jpg, jpeg, png</p>
+              <b-form-file
+                v-model="imageFile"
+                placeholder="Choose a file or drop it here..."
+                drop-placeholder="Drop file here..."
+                :state="Boolean(imageFile)"
+                accept=".jpg, .png"
+                class="rounded-pill bg-light text-dark border-0 py-3 px-4 my-3"
+                @change="previewImage"
+              >
+              </b-form-file>
+              <!-- <input
                 v-model="imageFile"
                 hidden
                 accept=".jpg, .png, .jpeg"
@@ -51,26 +50,27 @@
               <b-button variant="warning" @click="uploadFile()"
                 >upload</b-button
               > -->
-              </div>
-              <div v-else>
-                <b-img :src="previewImageData" thumbnail></b-img>
-                <div style="text-align: center; padding-top: 5px">
-                  <b-button
-                    variant="warning"
-                    type="button"
-                    v-on:click="analyzeImage"
-                    class="rounded-pill px-4 m-1"
-                    >Analyze</b-button
-                  >
-                  <b-button
-                    variant="secondary"
-                    type="button"
-                    v-on:click="resetInput"
-                    class="rounded-pill px-4 m-1"
-                    >Reset</b-button
-                  >
-                </div>
-              </div>
+            </div>
+          </div>
+          <div v-else>
+            <div style="text-align: center">
+              <b-img :src="previewImageData" thumbnail></b-img>
+            </div>
+            <div style="text-align: center; padding-top: 5px">
+              <b-button
+                variant="warning"
+                type="button"
+                @click="analyzeImage"
+                class="rounded-pill px-4 m-1"
+                >Analyze
+              </b-button>
+              <b-button
+                variant="secondary"
+                type="button"
+                @click="resetInput"
+                class="rounded-pill px-4 m-1"
+                >Reset</b-button
+              >
             </div>
           </div>
         </div>

@@ -176,7 +176,9 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  background-color: white;
+  background-image: url("../assets/background.png");
+  background-size: cover;
+  background-repeat: repeat;
   transform: translate(-50%, -50%);
   border-radius: 5vh;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -219,8 +221,8 @@ export default {
   display: flex;
   position: relative;
   align-items: flex-start;
-  background-image: url("../assets/background.png");
-  background-repeat: repeat;
+  background-color: #ffffff;
+  background-repeat: repeat-y;
   background-size: cover;
 }
 .main-container {
@@ -239,7 +241,6 @@ export default {
   overflow: hidden;
   position: relative;
   align-items: flex-start;
-  background-image: url("../assets/background.png");
   background-size: cover;
 }
 .real-1 {

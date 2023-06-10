@@ -11,7 +11,7 @@
             <b-button
               variant="warning"
               class="button"
-              size="lg"
+              size="md"
               @click="scrollToUpload"
               >Let's start!
             </b-button>
@@ -35,7 +35,7 @@
                 drop-placeholder="Drop file here..."
                 :state="Boolean(imageFile)"
                 accept=".jpg, .png"
-                class="rounded-pill bg-light text-dark border-0 py-3 px-4 my-3"
+                class="rounded-pill bg-light text-dark border-0 py-3 px-4 my-3 form"
                 @change="previewImage"
               >
               </b-form-file>
@@ -52,17 +52,28 @@
               > -->
             </div>
           </div>
-          <div v-else>
+          <div v-else class="input-image">
             <div style="text-align: center">
               <b-img :src="previewImageData" thumbnail></b-img>
             </div>
             <div style="text-align: center; padding-top: 5px">
               <b-button
+                v-if="!loading"
                 variant="warning"
                 type="button"
                 @click="analyzeImage"
                 class="rounded-pill px-4 m-1"
                 >Analyze
+              </b-button>
+              <b-button
+                v-else
+                variant="warning"
+                type="button"
+                @click="analyzeImage"
+                class="rounded-pill px-4 m-1"
+                disabled
+                >Analyze
+                <b-spinner small></b-spinner>
               </b-button>
               <b-button
                 variant="secondary"
@@ -74,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="result" v-if="result">
+        <div class="result" v-if="result" ref="analyzeResult" tabindex="0">
           <h2>분석 결과</h2>
           <b-card class="mt-3" header="종 이름">
             <b-card-text class="m-0">{{ breedName }}</b-card-text>
@@ -82,9 +93,7 @@
           <b-card class="mt-3" header="종 특징">
             <b-card-text class="m-0">{{ breedProp }}</b-card-text>
           </b-card>
-          <b-card>
-            <b-card-img src="imageURL" alt="image"></b-card-img>
-          </b-card>
+          <b-img src="imageUrl" fluid alt="image"></b-img>
         </div>
       </div>
     </div>
@@ -99,7 +108,7 @@ export default {
   data() {
     return {
       imageFile: null,
-      result: null,
+      result: false,
       previewImageData: null,
       responseJson: null,
       responseImage: null,
@@ -107,6 +116,7 @@ export default {
       breedName: null,
       breedProp: null,
       image: null,
+      loading: false,
     };
   },
   props: {},
@@ -138,30 +148,48 @@ export default {
       this.previewImageData = null;
       this.imageFile = null;
       this.result = null;
+      this.result = false;
+      this.loading = false;
     },
     async analyzeImage() {
       this.breedName = null;
       this.breedProp = null;
+      this.loading = true;
       const formData = new FormData();
       formData.append("file", this.imageFile);
-      this.responseJson = await axios.post(
-        "http://3.133.59.45:8000/predict",
+      this.responseImage = await axios.post(
+        "http://13.58.82.189:8000/final",
         formData
       );
+      this.imageUrl = this.responseImage.data.image_url;
+
+      const responseBreed = await axios.post(
+        "http://13.58.82.189:8000/predict",
+        formData
+      );
+      this.breedName = responseBreed.data.breed;
+      console.log(this.breedName);
       this.makeResult();
 
-      this.responseImage = await axios.post(
-        "http://3.133.59.45:8000/final",
-        formData,
-        { responseType: "arraybuffer" }
-      );
-      const blob = new Blob([this.responseImage.data], { type: "image/png" });
-      this.imageURL = URL.createObjectURL(blob);
-      console.log(this.imageURL);
+      this.loading = false;
+      this.result = true;
+      this.scrollToResult();
+    },
+    async makeResult() {
+      var gpt_addr =
+        "https://gshnajsid6.execute-api.us-east-1.amazonaws.com/dev/" +
+        this.breedName;
+      var gptResponse = await axios.get(gpt_addr);
+      this.breedProp = gptResponse["data"];
     },
     scrollToUpload() {
       const upload = this.$refs.fileUpload;
       upload.scrollIntoView({ behavior: "smooth" });
+    },
+    scrollToResult() {
+      const result = this.$refs.analyzeResult;
+      console.log(result);
+      result.scrollIntoView({ behavior: "smooth" });
     },
   },
 };
@@ -188,11 +216,15 @@ export default {
 }
 
 .container {
-  top: 1400px;
+  top: 200vh;
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;
-  padding-bottom: 200px;
+  padding-bottom: 30vh;
+}
+
+.empty {
+  padding-bottom: 50vh;
 }
 
 .drop_box {
@@ -308,10 +340,10 @@ export default {
 .real-3 {
   position: absolute;
   max-width: 141px;
-  width: 23vw;
+  width: 27vw;
   max-height: 141px;
-  height: 23vw;
-  left: calc(50% - 17vh);
+  height: 27vw;
+  left: calc(50% - 15vh);
   top: calc(70vh);
 
   object-fit: cover;
@@ -323,9 +355,9 @@ export default {
 .icon-3 {
   position: absolute;
   max-width: 93px;
-  width: 15vw;
+  width: 17vw;
   max-height: 93px;
-  height: 15vw;
+  height: 17vw;
   left: calc(50% - 8vh);
   top: calc(78vh);
 
@@ -338,10 +370,8 @@ export default {
   transform: translate(-50%, -50%);
 }
 .text-group {
-  top: 50vh;
+  top: 30vh;
   left: 50%;
-  width: 934px;
-  height: 311px;
   display: flex;
   position: absolute;
   transform: translate(-50%, -50%);
@@ -351,10 +381,9 @@ export default {
 }
 .main-text {
   color: rgba(251, 234, 88, 1);
-  width: 934px;
   height: auto;
   position: absolute;
-  font-size: 96px;
+  font-size: 80px;
   font-style: Bold;
   text-align: center;
   font-family: Roboto;
@@ -365,13 +394,11 @@ export default {
   text-shadow: 1px 2px 2px #888;
 }
 .main-text2 {
-  top: 130px;
-  left: 221px;
   color: rgba(0, 0, 0, 1);
-  width: 491px;
   height: auto;
   position: absolute;
-  font-size: 36px;
+  top: 15vh;
+  font-size: 28px;
   font-style: Bold;
   text-align: center;
   font-family: Roboto;
@@ -384,7 +411,7 @@ export default {
 
 .button {
   position: absolute;
-  top: 190px;
+  top: 25vh;
   filter: drop-shadow(1px 2px 2px #bbb);
 }
 .main-text4 {
@@ -406,5 +433,16 @@ export default {
   transform: translate(-50%, -50%);
   position: relative;
   padding-bottom: 200px;
+}
+
+.input-image {
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.form {
+  width: 75vw;
+  max-width: 400px;
 }
 </style>

@@ -1,4 +1,4 @@
-# dog-mbti
+# dog-moji
 
 ## Project setup
 ```

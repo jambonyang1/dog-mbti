@@ -85,15 +85,17 @@
             </div>
           </div>
         </div>
-        <div class="result" v-if="result" ref="analyzeResult" tabindex="0">
+        <div class="result" v-if="result" ref="analyzeResult" tabindex="1">
           <h2>분석 결과</h2>
+          <b-card>
+            <b-card-img :src="imageUrl" alt="image"></b-card-img>
+          </b-card>
           <b-card class="mt-3" header="종 이름">
             <b-card-text class="m-0">{{ breedName }}</b-card-text>
           </b-card>
           <b-card class="mt-3" header="종 특징">
             <b-card-text class="m-0">{{ breedProp }}</b-card-text>
           </b-card>
-          <b-img src="imageUrl" fluid alt="image"></b-img>
         </div>
       </div>
     </div>
@@ -158,13 +160,13 @@ export default {
       const formData = new FormData();
       formData.append("file", this.imageFile);
       this.responseImage = await axios.post(
-        "http://13.58.82.189:8000/final",
+        "http://3.23.60.50:8000/final",
         formData
       );
       this.imageUrl = this.responseImage.data.image_url;
 
       const responseBreed = await axios.post(
-        "http://13.58.82.189:8000/predict",
+        "http://3.23.60.50:8000/predict",
         formData
       );
       this.breedName = responseBreed.data.breed;

@@ -74,15 +74,15 @@
             </div>
           </div>
         </div>
-        <div class="result" v-if="result" ref="analyzeResult" tabindex="1">
-          <h2>분석 결과</h2>
+        <div class="result" v-show="result" ref="analyzeResult" tabindex="1">
+          <h2>Result</h2>
           <b-card>
             <b-card-img :src="imageUrl" alt="image"></b-card-img>
           </b-card>
-          <b-card class="mt-3" header="종 이름">
+          <b-card class="mt-3" header="Breed">
             <b-card-text class="m-0">{{ breedName }}</b-card-text>
           </b-card>
-          <b-card class="mt-3" header="종 특징">
+          <b-card class="mt-3" header="Property">
             <b-card-text class="m-0">{{ breedProp }}</b-card-text>
           </b-card>
         </div>
@@ -112,7 +112,8 @@ export default {
   },
   props: {},
   methods: {
-    previewImage(event) { // 업로드한 이미지 화면에 띄울 수 있도록 함
+    previewImage(event) {
+      // 업로드한 이미지 화면에 띄울 수 있도록 함
       var input = event.target;
       if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -122,27 +123,31 @@ export default {
         reader.readAsDataURL(input.files[0]);
       }
     },
-    resetInput() { // 업로드한 이미지, 분석 결과 등 전부 초기화
+    resetInput() {
+      // 업로드한 이미지, 분석 결과 등 전부 초기화
       this.previewImageData = null;
       this.imageFile = null;
       this.result = null;
       this.result = false;
       this.loading = false;
     },
-    async analyzeImage() { // analyze 버튼 클릭 시 수행. 업로드한 이미지를 각 서버에 전송해 결과값을 받아오는 함수
+    async analyzeImage() {
+      // analyze 버튼 클릭 시 수행. 업로드한 이미지를 각 서버에 전송해 결과값을 받아오는 함수
       this.breedName = null;
       this.breedProp = null;
       this.loading = true;
       const formData = new FormData();
       formData.append("file", this.imageFile);
-      this.responseImage = await axios.post( // emoji 구현
-        "http://3.23.60.50:8000/final",
+      this.responseImage = await axios.post(
+        // emoji 구현
+        "https://dogiconde.duckdns.org/final",
         formData
       );
       this.imageUrl = this.responseImage.data.image_url;
 
-      const responseBreed = await axios.post(// 종 이름 예측
-        "http://3.23.60.50:8000/predict",
+      const responseBreed = await axios.post(
+        // 종 이름 예측
+        "https://dogiconde.duckdns.org/predict",
         formData
       );
       this.breedName = responseBreed.data.breed;
@@ -154,21 +159,23 @@ export default {
       this.result = true;
       this.scrollToResult();
     },
-    async makeResult() { // gpt에게 듣는 종 관련 설명
+    async makeResult() {
+      // gpt에게 듣는 종 관련 설명
       var gpt_addr =
         "https://gshnajsid6.execute-api.us-east-1.amazonaws.com/dev/" +
         this.breedName;
       var gptResponse = await axios.get(gpt_addr);
       this.breedProp = gptResponse["data"];
     },
-    scrollToUpload() { // 업로드 창으로 scroll
+    scrollToUpload() {
+      // 업로드 창으로 scroll
       const upload = this.$refs.fileUpload;
       upload.scrollIntoView({ behavior: "smooth" });
     },
-    scrollToResult() { // 결과 창으로 scroll
-      const result = this.$refs.analyzeResult;
-      console.log(result);
-      result.scrollIntoView({ behavior: "smooth" });
+    scrollToResult() {
+      // 결과 창으로 scroll
+      const resulttab = this.$refs.analyzeResult;
+      resulttab.scrollIntoView({ behavior: "smooth" });
     },
   },
 };
@@ -202,7 +209,6 @@ export default {
   padding-bottom: 30vh;
 }
 
-
 .drop_box {
   margin: 10px 0;
   padding: 30px;
@@ -233,7 +239,6 @@ export default {
   background-repeat: repeat-y;
   background-size: cover;
 }
-
 
 .real-1 {
   position: absolute;
@@ -374,7 +379,6 @@ export default {
   top: 25vh;
   filter: drop-shadow(1px 2px 2px #bbb);
 }
-
 
 .result {
   top: 2400px;

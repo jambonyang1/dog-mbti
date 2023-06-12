@@ -34,7 +34,7 @@
                 placeholder="Choose a file or drop it here..."
                 drop-placeholder="Drop file here..."
                 :state="Boolean(imageFile)"
-                accept=".jpg, .png"
+                accept=".jpg, .png, .jpeg"
                 class="rounded-pill bg-light text-dark border-0 py-3 px-4 my-3 form"
                 @change="previewImage"
               >
@@ -74,17 +74,19 @@
             </div>
           </div>
         </div>
-        <div class="result" v-show="result" ref="analyzeResult" tabindex="1">
-          <h2>Result</h2>
-          <b-card>
-            <b-card-img :src="imageUrl" alt="image"></b-card-img>
-          </b-card>
-          <b-card class="mt-3" header="Breed">
-            <b-card-text class="m-0">{{ breedName }}</b-card-text>
-          </b-card>
-          <b-card class="mt-3" header="Property">
-            <b-card-text class="m-0">{{ breedProp }}</b-card-text>
-          </b-card>
+        <div class="result" ref="analyzeResult" tabindex="0">
+          <div v-show="result">
+            <h2>Result</h2>
+            <b-card>
+              <b-card-img :src="imageUrl" alt="image"></b-card-img>
+            </b-card>
+            <b-card class="mt-3" header="Breed">
+              <b-card-text class="m-0">{{ breedName }}</b-card-text>
+            </b-card>
+            <b-card class="mt-3" header="Property">
+              <b-card-text class="m-0">{{ breedProp }}</b-card-text>
+            </b-card>
+          </div>
         </div>
       </div>
     </div>
@@ -93,6 +95,7 @@
 
 <script>
 import axios from "axios";
+import imageCompression from "browser-image-compression";
 
 export default {
   name: "Analyze",
@@ -111,6 +114,16 @@ export default {
     };
   },
   props: {},
+  mounted() {
+    this.$nextTick(() => {
+      this.scrollToResult();
+    });
+  },
+  watch: {
+    result() {
+      this.scrollToResult();
+    },
+  },
   methods: {
     previewImage(event) {
       // 업로드한 이미지 화면에 띄울 수 있도록 함
@@ -131,18 +144,31 @@ export default {
       this.result = false;
       this.loading = false;
     },
+    async compressImage(file) {
+      const compressedFile = await imageCompression(file, {
+        maxSizeKB: 50, // 최대 파일 크기 (메가바이트)
+        maxWidthOrHeight: 800, // 이미지의 최대 너비 또는 높이 (픽셀)
+      });
+      return compressedFile;
+    },
     async analyzeImage() {
       // analyze 버튼 클릭 시 수행. 업로드한 이미지를 각 서버에 전송해 결과값을 받아오는 함수
       this.breedName = null;
       this.breedProp = null;
       this.loading = true;
+
       const formData = new FormData();
-      formData.append("file", this.imageFile);
-      this.responseImage = await axios.post(
-        // emoji 구현
-        "https://dogiconde.duckdns.org/final",
-        formData
-      );
+      const compressedImage = await this.compressImage(this.imageFile);
+      formData.append("file", compressedImage);
+      try {
+        this.responseImage = await axios.post(
+          // emoji 구현
+          "https://dogiconde.duckdns.org/final",
+          formData
+        );
+      } catch {
+        console.log("error");
+      }
       this.imageUrl = this.responseImage.data.image_url;
 
       const responseBreed = await axios.post(
@@ -152,7 +178,7 @@ export default {
       );
       this.breedName = responseBreed.data.breed;
       console.log(this.breedName);
-      this.makeResult(); // this.breedName에 종 이름 선언했으니, makeResult() 호출 가능
+      await this.makeResult(); // this.breedName에 종 이름 선언했으니, makeResult() 호출 가능
 
       // 앞선 모든 과정이 오류없이 끝난다면, 모든 결과가 나왔다는 뜻이다. 아래 코드로 로딩이 끝나고, 결과값이 준비되었다는 것을 상태 변환
       this.loading = false;
@@ -169,19 +195,36 @@ export default {
     },
     scrollToUpload() {
       // 업로드 창으로 scroll
-      const upload = this.$refs.fileUpload;
-      upload.scrollIntoView({ behavior: "smooth" });
+      this.$refs["fileUpload"].scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      console.log("middle");
+      // upload.scrollIntoView({ behavior: "smooth" });
     },
     scrollToResult() {
       // 결과 창으로 scroll
-      const resulttab = this.$refs.analyzeResult;
-      resulttab.scrollIntoView({ behavior: "smooth" });
+      if (this.result) {
+        this.$refs["analyzeResult"].scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
+      }
+    },
+    downloadImage() {
+      const link = document.createElement("a");
+      link.href = this.imageUrl;
+      link.download = "dogmoji.jpg"; // 다운로드될 파일명
+      link.click();
     },
   },
 };
 </script>
 
 <style scoped>
+.empty {
+  padding-bottom: 30vh;
+}
 .box {
   height: 100vh;
   width: 95%;
@@ -206,7 +249,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;
-  padding-bottom: 30vh;
 }
 
 .drop_box {
@@ -381,11 +423,12 @@ export default {
 }
 
 .result {
+  padding-top: 30vh;
   top: 2400px;
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;
-  padding-bottom: 200px;
+  padding-bottom: 30vh;
 }
 
 .input-image {

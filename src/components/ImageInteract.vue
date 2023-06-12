@@ -36,9 +36,7 @@
           <b-card class="mt-3" header="종 특징">
             <b-card-text class="m-0">{{ breedProp }}</b-card-text>
           </b-card>
-          <b-card>
-            <b-card-img src="imageURL" alt="image"></b-card-img>
-          </b-card>
+          <b-img src="imageUrl" fluid alt="image"></b-img>
         </div>
         <!-- <div v-else class="text-center mt-3 d-flex justify-content-center">
           <b-spinner :variant="primary" :key="primary"></b-spinner>
